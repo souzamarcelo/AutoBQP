@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+rm grammar;
+rm runner;
+rm -r build;
+mkdir build;
+cd build;
+cmake ..;
+make;
+cp runner ..;
+cp grammar ..;
+cd ..;
+rm -r build;
