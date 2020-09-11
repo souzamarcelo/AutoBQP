@@ -1,5 +1,5 @@
 # AutoBQP
-A generic heuristic solver for solving binary optimization problems!
+A generic heuristic solver for binary optimization problems!
 
 This solver implements a set of heuristic strategies for the unconstrained Binary Quadratic Programming (BQP), and applies [irace](http://iridia.ulb.ac.be/irace) to search for the best combination of components and parameter values for solving the problem at hand.
 
