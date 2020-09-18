@@ -135,7 +135,6 @@ unsigned tabusearch(Solution &S, Improvement improve, Duration dgen, chrono::sys
                     const unsigned maxstagnate = numeric_limits<unsigned>::max(),
                     const unsigned maxsteps = numeric_limits<unsigned>::max()) {
     // local searches
-    //chrono::system_clock::time_point last_report = chrono::system_clock::now();
     unsigned i, steps = 0, notimproved = 0;
     Solution B(S.I);
     B = S;
@@ -166,8 +165,7 @@ unsigned tabusearch(Solution &S, Improvement improve, Duration dgen, chrono::sys
         if(d == S.x.size())
             tabu[i] = steps + S.I.deg[i] + 1;
         else if(d < S.x.size())
-            tabu[i] = steps + d + 1; //+randomInt(rng)%10+1; // hack for list 2, ex 2
-        //tabu[i]=steps+d+1+10000*2*double(numdiff[i])/double(steps);  // exp
+            tabu[i] = steps + d + 1;
         
         if(S.value < B.value) {
             //for(auto &t : tabu)

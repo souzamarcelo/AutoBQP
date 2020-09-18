@@ -134,7 +134,6 @@ namespace recombine {
         while (NC.size() > 0) {
             // (2.1) select a variable, flip it, remove it
             unsigned i = improve(S, NC);
-            //cout << "Selected " << i << " from "; copy(NC.begin(),NC.end(),ostream_iterator<unsigned>(cout," ")); cout << endl;
             S.flip(NC[i]);
             d++;
             

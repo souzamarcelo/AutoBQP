@@ -56,7 +56,7 @@ struct Instance : public boost::multi_array<double, 2> {
         setSize(n);
         
         ins >> m;
-        this->nnz = 2 * m; // TBD: wrong? diagonals!
+        this->nnz = 2 * m;
         unsigned nnz = m;
         while (nnz > 0) {
             unsigned i, j;
@@ -74,7 +74,7 @@ struct Instance : public boost::multi_array<double, 2> {
     }
     
     void readDense(istream &ins, bool maximize = false) {
-        ins >> n; // dummy: 1
+        ins >> n;
         ins >> n;
         setSize(n);
         
@@ -159,10 +159,9 @@ struct Instance : public boost::multi_array<double, 2> {
         
         for(unsigned i = 0; i < n; i++) {
             int r = lehmer::random(&seed, coef) * (ub_linear - lb_linear + 1);
-            // check bqpdata/data/Readme.org for an explanation of setting `j` here to n+1
             unsigned j = n + 1;
             if(clumpy && (i + 1 + j + 1) % clumpiness == 0)
-                r -= ub_linear;        // here's the perturbation which could create a small diagonal Q(i,i)
+                r -= ub_linear;
             (*this)[i][i] = r + lb_linear;
             if(negate)
                 (*this)[i][i] = -(*this)[i][i];
@@ -173,7 +172,7 @@ struct Instance : public boost::multi_array<double, 2> {
                 if(fl <= density) {
                     r = lehmer::random(&seed, coef) * (ub_quadr - lb_quadr + 1);
                     if(clumpy && (i + 1 + j + 1) % clumpiness == 0)
-                        r += ub_quadr;    // here's the perturbation which could create a large quadratic Q(i,j)
+                        r += ub_quadr;
                     (*this)[i][j] = r + lb_quadr;
                     if(negate)
                         (*this)[i][j] = -(*this)[i][j];
@@ -189,9 +188,6 @@ struct Instance : public boost::multi_array<double, 2> {
         }
     }
     
-    // read generator format of Palubeckis
-    //   for clumpy==true: generator of Lewis with extra `clumpiness` parameter
-    //   NOTE: Lewis' variant needs more tests.
     void readPalubeckis(istream &ins, bool negate = true, bool clumpy = false) {
         ins >> n;
         setSize(n);
@@ -328,24 +324,20 @@ struct Instance : public boost::multi_array<double, 2> {
         for(unsigned i = 0; i < n; i++)
             for(unsigned j = i; j < n; j++)
                 if((*this)[i][j] != 0)
-                    out << i + 1 << " " << j + 1 << " " << (*this)[i][j] << " "
-                        << endl; // space is to match Lewis' generator
+                    out << i + 1 << " " << j + 1 << " " << (*this)[i][j] << " " << endl;
     }
     
-    // show an instance, positive values are red, negative ones green
     void writePPM(ostream &out, unsigned bf = 1) {
         vector<unsigned> order(n, 0);
         iota(order.begin(), order.end(), 0);
         writePPM(out, order, bf);
     }
     
-    // show an instance, positive values are red, negative ones green
     void writePPM(ostream &out, const vector<unsigned> &order, unsigned bf = 1) {
         assert(order.size() == n);
         out << "P3 " << " " << n / bf << " " << n / bf << endl;
         out << "255" << endl;
         
-        // (1) go over all blocks, find maximum absolute sum
         int bmax = 0;
         for(unsigned i = 0; i < n / bf; i++) {
             for(unsigned j = 0; j < n / bf; j++) {
@@ -360,10 +352,8 @@ struct Instance : public boost::multi_array<double, 2> {
             }
         }
         
-        // (2) go over them again and create an image
         for(unsigned i = 0; i < n / bf; i++) {
             for(unsigned j = 0; j < n / bf; j++) {
-                //int v = (*this)[order[i]][order[j]];
                 int v = 0;
                 for(unsigned bi = 0; bi < bf; bi++)
                     for(unsigned bj = 0; bj < bf; bj++)
@@ -380,8 +370,6 @@ struct Instance : public boost::multi_array<double, 2> {
     }
     
     void computeTransformation() {
-
-        //Create matrix A
         A.resize(extents[desks + 1][n]);
         for(unsigned d = 0; d < desks; d++) {
             unsigned start = d * colors;
@@ -408,7 +396,6 @@ struct Instance : public boost::multi_array<double, 2> {
             }
         }
         
-        //Create matrix At
         At.resize(extents[n][desks + 1]);
         for(unsigned i = 0; i < desks + 1; i++) {
             for(unsigned j = 0; j < n; j++) {
@@ -416,7 +403,6 @@ struct Instance : public boost::multi_array<double, 2> {
             }
         }
         
-        //Create AtA
         AtA.resize(extents[n][n]);
         for(unsigned i = 0; i < n; i ++) {
             for(unsigned j = 0; j < n; j++) {
@@ -428,14 +414,12 @@ struct Instance : public boost::multi_array<double, 2> {
             }
         }
         
-        //Create vector b
         b.clear();
         for(unsigned i = 0; i < desks; i++) {
             b.push_back(1);
         }
         b.push_back(uncolored);
         
-        //Create vector twoDiagAtb
         vector<unsigned> twoDiagAtb;
         twoDiagAtb.clear();
         for(unsigned i = 0; i < n; i++) {
@@ -446,14 +430,12 @@ struct Instance : public boost::multi_array<double, 2> {
             twoDiagAtb.push_back(2 * value);
         }
 
-        //Create penalty P
         P = 0;
         for(unsigned i = 0; i < n; i++) {
             for(unsigned j = 0; j < n; j++) {
                 P += q[i][j];
             }
         }
-        //Compute AtA - twoDiagAtb
         for(unsigned i = 0; i < n; i++) {
             for(unsigned j = 0; j < n; j++) {
                 if(i == j) {
@@ -462,21 +444,18 @@ struct Instance : public boost::multi_array<double, 2> {
             }
         }
         
-        //Compute P * (AtA - twoDiagAtb)
         for(unsigned i = 0; i < n; i++) {
             for(unsigned j = 0; j < n; j++) {
                 AtA[i][j] = P * AtA[i][j];
             }
         }
         
-        //Compute Q_hat
         for(unsigned i = 0; i < n; i++) {
             for(unsigned j = 0; j < n; j++) {
                 (*this)[i][j] = q[i][j] + AtA[i][j];
             }
         }
         
-        //Compute btb
         btb = desks + (uncolored * uncolored);
     }
 };

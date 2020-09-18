@@ -10,4 +10,3 @@ make;
 cp runner ..;
 cp grammar ..;
 cd ..;
-rm -r build;

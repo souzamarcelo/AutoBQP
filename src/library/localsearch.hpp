@@ -344,11 +344,8 @@ unsigned iterated_localsearch_elite(Solution &S, Improvement improve, Perturbati
         S = e.getRandom();
         perturb(S);
         improve(S);
-
-        // (5) accept (unconditional acceptance for now)
-        // TBD: implement a couple of acceptance rules (always,better,better_or_equal,metropolis)
         
-        // (6) update incumbent
+        // (5) update incumbent
         if(S.value < e[0].value) {
             S.time = chrono::system_clock::now();
         }
@@ -386,14 +383,11 @@ unsigned brls(Solution &S, Improve improvement, chrono::system_clock::time_point
             trial--;
             if(trial == 0) {
                 trial = stagnation;
-                //cout << "Stagnation at v=" << S.value << "." << endl;
                 if(Lv == S.value) {
                     L *= 2;
-                    //cout << "Same as before, new perturbation " << L << endl;
                 } else {
                     L = 1;
                     Lv = S.value;
-                    //cout << "New, reset perturbation " << L << endl;
                 }
                 // perturb
                 for(unsigned j = 0; j < L; j++)
@@ -407,14 +401,11 @@ unsigned brls(Solution &S, Improve improvement, chrono::system_clock::time_point
 #else // solution-based
         // made for bi
         if (!isValid(i,S)) {
-          //cout << "Local minimum v=" << S.value << " reached." << endl;
           if (LL == S) {
         L *= 2;
-        //cout << "Same as before, new perturbation " << L << endl;
           } else {
         L = 1;
         LL = S;
-        //cout << "New, reset perturbation " << L << endl;
           }
           // perturb
           for(unsigned j=0; j<L; j++)

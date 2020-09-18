@@ -25,7 +25,6 @@ void construct0(const Instance &I, Solution &S, double alpha) {
         if(mv > Mv)
             break;
         double maxvalue = ceil(alpha * mv + (1 - alpha) * Mv);
-        //cout << "Range [" << (mv) << "," << (Mv) << "], of " << /* # S.flipvalue<0 */ << " cut alpha " << alpha << " at " << maxvalue << endl;
         
         // (2.2) select
         unsigned cv;
@@ -76,7 +75,6 @@ void constructHalf(const Instance &I, Solution &S, double alpha) {
             Mv = max(Mv, g1[v]);
         }
         int maxvalue = ceil(alpha * mv + (1 - alpha) * Mv);
-        //cout << "Range [" << (mv) << "," << (Mv) << "], of " << 2*N.size() << " cut alpha " << alpha << " at " << maxvalue << endl;
         
         // (2.2) select
         Cel sc;
@@ -95,7 +93,6 @@ void constructHalf(const Instance &I, Solution &S, double alpha) {
         // (2.3) set
         // TBD: could go over non-zeros only
         const unsigned cv = get<0>(sc);
-        //cout << "Setting " << cv << " to " << get<1>(sc) << " gain " << ((get<1>(sc)==1)?g1[cv]:g0[cv]) << endl;
         if(get<1>(sc) == 1) {
             S.set(cv);
             for(unsigned i = 0; i < I.n; i++) {
@@ -111,7 +108,6 @@ void constructHalf(const Instance &I, Solution &S, double alpha) {
         }
         N.erase(cv);
     }
-    //cout << endl;
 }
 
 // repeated greedy randomized construction

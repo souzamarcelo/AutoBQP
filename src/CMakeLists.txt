@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 include (InstallRequiredSystemLibraries)
 
-project(aac-bqp)
+project(autobqp)
 
 set(CMAKE_BUILD_TYPE Release)
 

@@ -38,7 +38,6 @@ int getRandomUnsigned(unsigned range) {
     return rand() % range;
 }
 
-//Non-terminals enumeration
 enum {
     ALG = 0,
     SEARCH,

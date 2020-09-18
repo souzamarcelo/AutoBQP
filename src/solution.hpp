@@ -100,7 +100,6 @@ struct Solution {
         const int sign = x[i] ? -1 : 1;
         const unsigned n = x.size();
         
-        // TDB: could go over only the non-zero entries
         for(unsigned j = 0; j < n; j++)
             if(j != i)
                 d[j] += 2 * I[j][i] * sign * (1 - 2 * x[j]);
