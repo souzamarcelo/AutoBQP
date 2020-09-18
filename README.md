@@ -11,17 +11,13 @@ If you have any difficult or want to collaborate with us, please write to me: ma
 
 ## Relevant Literature
 
-The following article describes in detail the AutoBQP solver and presents applications on BQP and MaxCut problems.
+The following article describes in detail the AutoBQP solver and presents applications on solving BQP and MaxCut problems:
 
-> **Automatic Grammar-Based Design of Heuristic Algorithms for Unconstrained Binary Quadratic Programming**<br>
-> Marcelo de Souza, Marcus Ritt<br>
-> Liefooghe A., López-Ibáñez M. (Org.). Lecture Notes in Computer Science. 1ed.: Springer International Publishing, v. 10782, p. 67-84, 2018
++ Marcelo de Souza, Marcus Ritt. **Automatic Grammar-Based Design of Heuristic Algorithms for Unconstrained Binary Quadratic Programming**. In Liefooghe A., López-Ibáñez M. (Org.), Lecture Notes in Computer Science, 1ed.: Springer International Publishing, v. 10782, p. 67-84, 2018.
 
 The following article applies the AutoBQP solver to the test assignment problem:
 
-> **An Automatically Designed Recombination Heuristic for the Test-Assignment Problem**<br>
-> Marcelo de Souza, Marcus Ritt<br>
-> 2018 IEEE Congress on Evolutionary Computation (CEC), Rio de Janeiro, 2018
++ Marcelo de Souza, Marcus Ritt. **An Automatically Designed Recombination Heuristic for the Test-Assignment Problem**. 2018 IEEE Congress on Evolutionary Computation (CEC), Rio de Janeiro, 2018.
 
 ## Examples
 
