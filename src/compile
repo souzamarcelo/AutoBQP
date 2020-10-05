@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-rm grammar;
-rm runner;
-rm -r build;
-mkdir build;
-cd build;
-cmake ..;
-make;
-cp runner ..;
-cp grammar ..;
-cd ..;
+rm runner >> /dev/null;
+rm grammar >> /dev/null;
+rm -r build >> /dev/null;
+mkdir build >> /dev/null;
+cd build >> /dev/null;
+cmake .. >> /dev/null;
+make >> /dev/null;
+cp runner .. >> /dev/null;
+cp grammar .. >> /dev/null;
+cd .. >> /dev/null;

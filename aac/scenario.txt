@@ -1,0 +1,8 @@
+parameterFile = "./parameters.txt"
+execDir = "."
+trainInstancesDir = "./instances"
+trainInstancesFile = "./instances.txt"
+digits = 2
+targetRunner = "./target-runner.py"
+deterministic = FALSE
+sampleInstances = TRUE

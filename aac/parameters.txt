@@ -1,0 +1,35 @@
+cAlg "--cAlg " c (0,1,2)
+cSearch1 "--cSearch " c (0,1,2,3,4)
+cSearch2 "--cSearch " c (0,1,2) | cSearch1 %in% c(3,4)
+cModification1 "--cModification " c (0,1,2,3,4,5,6)
+cModification2 "--cModification " c (0,1,2,3,4,5,6) | cAlg == 2
+cTs "--cTs " c (0,1) | cSearch1 == 2 | cSearch2 == 2
+cPert "--cPert " c (0,1,2) | cSearch1 %in% c(3,4)
+cStep "--cStep " c (0,1,2,3) | cSearch1 %in% c(3,4)
+cConstruction "--cConstruction " c (0,1) | cAlg == 1
+cConstructor "--cConstructor " c (0,1) | cAlg == 1
+pTenureType "--pTenureType " c (p, n, c, a, v, r) | cTs %in% c(0,1)
+pTenureValue "--pTenureValue " i (1, 50) | pTenureType == "n"
+pTenurePercent "--pTenurePercent " i (10, 80) | pTenureType == "p"
+pTenureDivision "--pTenureDivision " i (50, 500) | pTenureType == "c"
+pTenureVariation "--pTenureVariation " i (1, 100) | pTenureType == "r"
+pCm "--pCm " i (2, 500) | pTenureType == "r"
+pMaxStagnateType "--pMaxStagnateType " c (n, a, i, m) | cTs %in% c(0,1)
+pMaxStagnateValue "--pMaxStagnateValue " i (500, 100000) | pMaxStagnateType == "n"
+pMum "--pMum " i (1, 100) | cTs %in% c(0,1) | pMaxStagnateType == "m"
+pIc "--pIc " i (1, 100) | pMaxStagnateType == "a"
+pMaxStepsType "--pMaxStepsType " c (n, a, i) | cTs %in% c(0,1)
+pMaxStepsValue "--pMaxStepsValue " i (1000, 50000)
+pP "--pP " r (0.0, 1.0) | cTs == 1 | cSearch1 == 1 | cSearch2 == 1
+pD1 "--pD1 " i (1, 100) | cSearch1 %in% c(3,4)
+pD2 "--pD2 " i (1, 100) | cSearch1 %in% c(3,4)
+pB "--pB " i (1, 20) | cPert %in% c(0,1)
+pR "--pR " i (1, 30) | cPert == 2 | cSearch1 == 4
+pGamma "--pGamma " r (0.1, 0.5) | cAlg == 2
+pGammam "--pGammam " i (2, 100) | cStep == 3
+pBeta "--pBeta " r (0.1, 0.9) | cPert == 2
+pAlpha "--pAlpha " i (0.0, 1.0) | cAlg == 1
+pN "--pN " i (10, 100) | cAlg == 1
+pBsize "--pBsize " i (1, 20) | cAlg == 2
+pLambda "--pLambda " r (1.0, 3.0) | cPert == 2
+pSiPartialSize "--pSiPartialSize " i (5, 50) | cModification1 %in% c(5,6) | cModification2 %in% c(5,6)

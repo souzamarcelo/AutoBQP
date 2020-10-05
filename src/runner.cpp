@@ -20,7 +20,6 @@ chrono::system_clock::time_point startTime;
 
 #include "rng.hpp"
 #include "instance.hpp"
-#include "instancedata.hpp"
 #include "solution.hpp"
 #include "report.hpp"
 Report report;
@@ -38,7 +37,10 @@ int main(int argc, char *argv[]) {
             ("help", "show help")
             ("ins", po::value<string>(), "instance")
             ("seed", po::value<unsigned>()->default_value(0), "random seed")
-            ("timescale", po::value<double>()->default_value(1), "time scale for experiments")
+            ("runtime", po::value<unsigned>()->default_value(300), "running time limit (s)")
+            ("maximize", po::value<bool>()->default_value(false), "multiply weight by -1")
+            ("format", po::value<string>()->default_value("sparse"), "instance format (sparse, pgen, maxcut, tap...)")
+            ("target", po::value<double>()->default_value(numeric_limits<int>::min()), "target value")
             ;
 
     po::positional_options_description pod;
@@ -55,28 +57,20 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    Instance I;
-    double target;
-    double scale;
-    string instanceName;
-    bool maximize;
-    unsigned seed;
-
-    scale = vm["timescale"].as<double>();
-    seed = vm["seed"].as<unsigned>();
+    unsigned seed = vm["seed"].as<unsigned>();
     setupRandom(seed);
 
-    instanceName = vm["ins"].as<string>();
+    Instance I;
+    string instanceName = vm["ins"].as<string>();
     ifstream ins(instanceName);
     if (!ins.good()) {
         cout << "Can't open instance file " << instanceName << endl;
         return 1;
     }
-
-    target = getBestKnownValue(instanceName);
-    timeLimit = getTimeLimit(instanceName, scale);
-    maximize = getMaximize(instanceName);
-    format = getFormat(instanceName);
+    double target = vm["target"].as<double>();
+    timeLimit = vm["runtime"].as<unsigned>();
+    bool maximize = vm["maximize"].as<bool>();
+    string format = vm["format"].as<string>();
 
     I.readInstance(ins, maximize, format);
     Solution S(I);

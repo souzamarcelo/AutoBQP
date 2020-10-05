@@ -1,0 +1,5 @@
+p3000-1.def --maximize 1 --format pgen --runtime 10
+p4000-1.def --maximize 1 --format pgen --runtime 10
+p5000-1.def --maximize 1 --format pgen --runtime 10
+p6000-1.def --maximize 1 --format pgen --runtime 10
+p7000-1.def --maximize 1 --format pgen --runtime 10
