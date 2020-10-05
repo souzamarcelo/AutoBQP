@@ -21,7 +21,7 @@ The following article applies the AutoBQP solver to the **test assignment** prob
 
 + Marcelo de Souza, Marcus Ritt. **An Automatically Designed Recombination Heuristic for the Test-Assignment Problem**. 2018 IEEE Congress on Evolutionary Computation (CEC), Rio de Janeiro, 2018.
 
-Please, make sure to reference us if you use capopt in your research.
+Please, make sure to reference us if you use AutoBQP in your research.
 
 ```bibtex
 @inproceedings{SouzaEtAl2018autobqp,
