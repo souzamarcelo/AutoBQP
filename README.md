@@ -51,9 +51,9 @@ AutoBQP is implemented in C++/Python and requires:
 To use AutoBQP, follow the steps below.
 
 1. [Download](https://github.com/souzamarcelo/AutoBQP/archive/master.zip) and unzip AutoBQP.
-2. Create a folder with the instances of the problem being solved.
+2. Create a directory with the instances of the problem being solved: `instances`.
    + See this example: [aac/instances/](aac/instances)
-3. Create a text file with each instance (file name) and arguments:
+3. Create a text file with each instance (file name) and arguments: `instances.txt`.
    + See this example: [aac/instances.txt](aac/instances.txt)
    + For example, in line `p3000-1.def --maximize 1 --format pgen --runtime 10`:
      + `p3000-1.def` is the instance file name;
@@ -63,7 +63,10 @@ To use AutoBQP, follow the steps below.
 4. If needed, provide a function to read the instance in the [src/instance.hpp](src/instance.hpp) file.
    + Observe that the code calls the corresponding function according to the instance format.
 5. You can also make problem-specific modifications in files [src/solution.hpp](src/solution.hpp) and [src/runner.cpp](src/runner.cpp), if needed.
-6. Run [AutoBQP.py](AutoBQP.py): `./AutoBQP.py`!
+6. Run [AutoBQP.py](AutoBQP.py).
+   + `./AutoBQP.py --insdir /path/to/instances --insfile /path/to/instances.txt --budget 2000 --parallel 4`.
+     + Option `--budget` defines the maximum number of executions for the automatic design process.
+     + Option `--parallel` defines the number of cores to be used for parallelization.
 
 You can also just execute an algorithm to solve an instance. For example, given the algorithm described by the corresponding parameter values:
 
