@@ -10,7 +10,7 @@ struct Solution {
     
     // data for diversity-driven search
     unsigned ones;
-    vector<unsigned> freq; // number of flips; TBD: make optional?
+    vector<unsigned> freq; // number of flips;
     
     // data for recombiner
     bool novel;
@@ -20,11 +20,12 @@ struct Solution {
         for(char &c : x)
             c = random01(rng) < 0.5 ? 0 : 1;
         
+        //code for the test assignment problem
+        //(generate a feasible solution)
         if(format == "tap") {
             for(char& c : x)
                 c = 0;
-    
-            //Fill F desks with null color
+            //fill F desks with null color
             for(unsigned i = 0; i < I.uncolored; i++) {
                 unsigned desk = rand() % I.desks;
                 unsigned index = I.colors * desk;
@@ -34,8 +35,7 @@ struct Solution {
                     i--;
                 }
             }
-    
-            //Fill each table with exactly one color
+            //fill each table with exactly one color
             for(unsigned i = 0; i < I.desks; i++) {
                 unsigned start = I.colors * i;
                 if(!x[start]) {
@@ -132,6 +132,7 @@ struct Solution {
         freq[i]++;
     }
     
+    // flip variable
     void flip(unsigned i) {
         if(x[i])
             reset(i);
@@ -139,10 +140,12 @@ struct Solution {
             set(i);
     }
     
+    // get value of flip
     double flipvalue(unsigned i) const {
         return delta(i);
     }
     
+    // distance from given solution
     unsigned distance(const Solution &other) const {
         unsigned result = 0;
         for(unsigned i = 0; i < x.size(); i++)

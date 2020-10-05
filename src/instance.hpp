@@ -5,10 +5,10 @@ struct Instance : public boost::multi_array<double, 2> {
     std::vector<unsigned> deg;
     unsigned nnz;
     
+    //variables for the test assignment problem
     unsigned desks, colors, uncolored;
     double P;
     double btb;
-    
     unsigned deskDistances;
     boost::multi_array<double,2> penaltiesColors;
     boost::multi_array<double,2> distancesDesks;
@@ -19,6 +19,7 @@ struct Instance : public boost::multi_array<double, 2> {
     vector<double> b;
     vector<double> twoDiagAtb;
     
+    //set size of instance
     void setSize(unsigned _n) {
         n = _n;
         checkPlausible();
@@ -27,6 +28,7 @@ struct Instance : public boost::multi_array<double, 2> {
         nnz = 0;
     }
     
+    //check size constraint (15000)
     void checkPlausible() {
         if(n > 15000) {
             cerr << "Instance has " << n << " variables. Refused." << endl;
@@ -34,6 +36,7 @@ struct Instance : public boost::multi_array<double, 2> {
         }
     }
 
+    //read instance according to format
     void readInstance(istream &ins, bool maximize, string format) {
         if(format == "sparse")
             readSparse(ins, maximize);
@@ -51,6 +54,7 @@ struct Instance : public boost::multi_array<double, 2> {
             readTap(ins);
     }
     
+    //reading method for sparse format
     void readSparse(istream &ins, bool maximize = false) {
         ins >> n;
         setSize(n);
@@ -73,6 +77,7 @@ struct Instance : public boost::multi_array<double, 2> {
         }
     }
     
+    //reading method for dense format
     void readDense(istream &ins, bool maximize = false) {
         ins >> n;
         ins >> n;
@@ -92,6 +97,7 @@ struct Instance : public boost::multi_array<double, 2> {
             }
     }
     
+    //reading method for maxcut format
     void readMaxcut(istream &ins) {
         ins >> n;
         setSize(n);
@@ -116,6 +122,7 @@ struct Instance : public boost::multi_array<double, 2> {
         }
     }
 
+    //reading method for clique format
     void readClique(istream &ins) {
         double p = 1000;
         string line;
@@ -150,6 +157,7 @@ struct Instance : public boost::multi_array<double, 2> {
         }
     }
     
+    //generation method for pgen and lgen formats
     void genPalubeckis(int density, int lb_linear, int ub_linear, int lb_quadr, int ub_quadr, int clumpiness, double seed,
                   bool negate = true, bool clumpy = false) {
         double coef = 2048;
@@ -188,6 +196,7 @@ struct Instance : public boost::multi_array<double, 2> {
         }
     }
     
+    //reading method for pgen and lgen formats
     void readPalubeckis(istream &ins, bool negate = true, bool clumpy = false) {
         ins >> n;
         setSize(n);
@@ -204,6 +213,7 @@ struct Instance : public boost::multi_array<double, 2> {
         genPalubeckis(density, lb_linear, ub_linear, lb_quadr, ub_quadr, clumpiness, seed, negate, clumpy);
     }
     
+    //reading method for tap format
     void readTap(istream &ins) {
         ins >> desks;
         ins >> deskDistances;
@@ -300,75 +310,7 @@ struct Instance : public boost::multi_array<double, 2> {
         computeTransformation();
     }
     
-    void writeDense(ostream &out) {
-        out << 1 << " " << n << endl;
-        
-        for(unsigned i = 0; i < n; i++) {
-            for(unsigned j = 0; j < n; j++) {
-                out << setw(5) << (*this)[i][j];
-                if((j + 1) % 15 == 0)
-                    out << endl;
-            }
-            if(n < 14)
-                out << endl;
-        }
-        out << endl;
-    }
-    
-    void writeSparse(ostream &out) {
-        unsigned ndiag = 0;
-        for(unsigned i = 0; i < n; i++)
-            if((*this)[i][i] != 0)
-                ndiag++;
-        out << n << " " << ndiag + (nnz - ndiag) / 2 << endl;
-        for(unsigned i = 0; i < n; i++)
-            for(unsigned j = i; j < n; j++)
-                if((*this)[i][j] != 0)
-                    out << i + 1 << " " << j + 1 << " " << (*this)[i][j] << " " << endl;
-    }
-    
-    void writePPM(ostream &out, unsigned bf = 1) {
-        vector<unsigned> order(n, 0);
-        iota(order.begin(), order.end(), 0);
-        writePPM(out, order, bf);
-    }
-    
-    void writePPM(ostream &out, const vector<unsigned> &order, unsigned bf = 1) {
-        assert(order.size() == n);
-        out << "P3 " << " " << n / bf << " " << n / bf << endl;
-        out << "255" << endl;
-        
-        int bmax = 0;
-        for(unsigned i = 0; i < n / bf; i++) {
-            for(unsigned j = 0; j < n / bf; j++) {
-                int v = 0;
-                for(unsigned bi = 0; bi < bf; bi++)
-                    for(unsigned bj = 0; bj < bf; bj++)
-                        v += (*this)[order[i * bf + bi]][order[j * bf + bj]];
-                if(v > bmax)
-                    bmax = v;
-                if(-v > bmax)
-                    bmax = -v;
-            }
-        }
-        
-        for(unsigned i = 0; i < n / bf; i++) {
-            for(unsigned j = 0; j < n / bf; j++) {
-                int v = 0;
-                for(unsigned bi = 0; bi < bf; bi++)
-                    for(unsigned bj = 0; bj < bf; bj++)
-                        v += (*this)[order[i * bf + bi]][order[j * bf + bj]];
-                if(v > 0)
-                    out << int(v * 255 / bmax) << " 0 0 ";
-                else if(v == 0)
-                    out << "0 0 0 ";
-                else
-                    out << "0 " << int(-v * 255 / bmax) << " 0 ";
-            }
-            out << endl;
-        }
-    }
-    
+    //transformation to address linear restriction of tap
     void computeTransformation() {
         A.resize(extents[desks + 1][n]);
         for(unsigned d = 0; d < desks; d++) {
