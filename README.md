@@ -39,8 +39,8 @@ Please, make sure to reference us if you use AutoBQP in your research.
 ## Requirements
 
 AutoBQP is implemented in C++/Python and requires:
-+ [gcc/g++](https://gcc.gnu.org) compiler
-+ [cmake](https://cmake.org) and [GNU Make](https://www.gnu.org/software/make)
++ [GCC/G++](https://gcc.gnu.org) compiler
++ [CMake](https://cmake.org) and [GNU Make](https://www.gnu.org/software/make)
 + [Boost C++ libraries](https://www.boost.org)
 + [Python 3](https://www.python.org)
 
