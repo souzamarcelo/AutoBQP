@@ -43,6 +43,7 @@ AutoBQP is implemented in C++/Python and requires:
 + [CMake](https://cmake.org) and [GNU Make](https://www.gnu.org/software/make)
 + [Boost C++ libraries](https://www.boost.org)
 + [Python 3](https://www.python.org)
++ [R](https://www.r-project.org) and [irace](https://iridia.ulb.ac.be/irace)
 
 ***
 
