@@ -32,7 +32,7 @@ os.unlink(directory + '/algorithm.cpp')
 shutil.move(algorithm, directory + '/algorithm.cpp')
 
 # Compile the generated algorithm into the solver
-#os.system('cd ' + directory + '; cmake . >> /dev/null')
+os.system('cd ' + directory + '; cmake . >> /dev/null')
 os.system('cd ' + directory + '; make runner >> /dev/null')
 
 # Create execution command
