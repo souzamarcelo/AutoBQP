@@ -1,7 +1,8 @@
 # AutoBQP
-A generic black-box solver for binary problems based on the automatic design of heuristic algorithms!
 
-This solver implements a set of heuristic strategies for the unconstrained Binary Quadratic Programming (BQP), and applies [irace](http://iridia.ulb.ac.be/irace) to search for the best combination of components and parameter values for solving the problem at hand.
+**A Component-Wise Solver to Binary Optimization!**
+
+AutoBQP is a generic black-box solver for binary problems based on the automatic design of heuristic algorithms. This solver implements a set of heuristic strategies for the unconstrained Binary Quadratic Programming (BQP), and applies [irace](http://iridia.ulb.ac.be/irace) to search for the best combination of components and parameter values for solving the problem at hand.
 
 **Maintainer:** [Marcelo de Souza](https://souzamarcelo.github.io).
 
